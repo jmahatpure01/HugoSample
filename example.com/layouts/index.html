@@ -1,0 +1,67 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script type="text/javascript" src="{{ $.Site.BaseURL }}js/bootstrap-datepicker.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="{{ $.Site.BaseURL }}css/bootstrap-datepicker3.min.css">
+    <script>
+    $(function() {
+        $("#slider").slider({
+            value: 130,
+            min: 100,
+            max: 250,
+            step: 10,
+            slide: function(event, ui) {
+                $("#amount").val("$" + ui.value);
+            }
+        });
+        $("#amount").val("$" + $("#slider").slider("value"));
+    });
+    $(document).ready(function() {
+
+        $('#datepicker').datepicker({
+            format: "dd/mm/yyyy",
+            startDate: "+8d",
+            endDate: "+30d"
+        });
+    });
+    $('#datepicker').on('changeDate', function() {
+      var date = $('#datepicker').datepicker('getFormattedDate');
+    $('#dateval').val(date);
+});
+    </script>
+    <style type="text/css">
+    
+    </style>
+</head>
+
+<body>
+    <div class="row container img-responsive" style="background-image: url({{ $.Site.BaseURL }}hero_faces_bw2.jpg);width: 100%;height: 100%;">
+        {{ .Content }}
+        <div class="col-md-3 col-md-offset-1" style="background-color: white;z-index: 10000;margin-top:5%;padding: 15px;width:22%;">
+            <p>
+                <label for="amount">Amount:</label>
+                <input type="text" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold;">
+            </p>
+            <div id="slider" class="col-md-10 col-md-offset-1"></div>
+            <br>
+            <div class="col-md-1 left" style="font-size: 10px;">100</div>
+            <div class="col-md-1 col-md-offset-9" style="font-size: 10px;">250</div>
+            <br>
+            <div>Repay On:<div id="dateval"></div></div>
+            <div id="datepicker" class="col-md-8 col-md-offset-1">
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+</script>
+
+</html>
