@@ -11,34 +11,10 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script type="text/javascript" src="{{ $.Site.BaseURL }}js/bootstrap-datepicker.min.js"></script>
     <link rel="stylesheet" type="text/css" href="{{ $.Site.BaseURL }}css/bootstrap-datepicker3.min.css">
-    <script>
-    $(function() {
-        $("#slider").slider({
-            value: 130,
-            min: 100,
-            max: 250,
-            step: 10,
-            slide: function(event, ui) {
-                $("#amount").val("$" + ui.value);
-            }
-        });
-        $("#amount").val("$" + $("#slider").slider("value"));
-    });
-    $(document).ready(function() {
-
-        $('#datepicker').datepicker({
-            format: "dd/mm/yyyy",
-            startDate: "+8d",
-            endDate: "+30d"
-        });
-    });
-    $('#datepicker').on('changeDate', function() {
-      var date = $('#datepicker').datepicker('getFormattedDate');
-    $('#dateval').val(date);
-});
-    </script>
     <style type="text/css">
-    
+    .datepicker-inline{
+    	border: groove;
+    }
     </style>
 </head>
 
@@ -55,13 +31,74 @@
             <div class="col-md-1 left" style="font-size: 10px;">100</div>
             <div class="col-md-1 col-md-offset-9" style="font-size: 10px;">250</div>
             <br>
-            <div>Repay On:<div id="dateval"></div></div>
+            <div>Repay On: <span id="dateval" style="font-weight: bold;"></span>
+            </div>
+         
             <div id="datepicker" class="col-md-8 col-md-offset-1">
             </div>
+       
+            <div class="col-md-4 col-md-offset-1" id="amt" style="font-size: 12px;">
+            </div>
+            <div class="col-md-4" id="int"></div>
+            <div class="col-md-4" id="rep"></div>
         </div>
     </div>
 </body>
 <script>
-</script>
+    
+    $(document).ready(function() {
+
+    	var amt, date;
+
+    	$("#slider").slider({
+            value: 130,
+            min: 100,
+            max: 250,
+            step: 10,
+            slide: function(event, ui) {
+            	amt = ui.value;
+                $("#amount").val("$" + amt);
+                
+            }
+        });
+        $("#amount").val("$" + $("#slider").slider("value"));
+
+
+        $('#datepicker').datepicker({
+            format: "D, M d",
+            startDate: "+8d",
+            endDate: "+30d",
+            maxViewMode: 0
+        });
+
+
+        $('#datepicker').datepicker('setDate','+11d');
+        date = $('#datepicker').datepicker("getFormattedDate");
+        $('#dateval').html(date);
+
+        var day = new Date(date);
+        var today = new Date();
+        var diff = today.getTime() - day.getTime();
+        diff = Math.round(diff/(1000 * 60 * 60 * 24));
+
+        amt = $('#amount').val();
+        $('#amt').html("Amount<br><strong>"+amt+"</strong><br>for "+diff+" days");
+
+        $('#datepicker').on('changeDate', function() {
+        	date = $('#datepicker').datepicker("getFormattedDate");
+        $('#dateval').html(date);
+
+        day = new Date(date);
+        var diff = today.getTime() - day.getTime();
+        diff = Math.round(diff/(1000 * 60 * 60 * 24));
+
+        amt = $('#amount').val();
+        $('#amt').html("Amount<br><strong>"+amt+"</strong><br>for "+diff+" days");
+
+    });
+    });
+    
+    </script>
+    
 
 </html>
