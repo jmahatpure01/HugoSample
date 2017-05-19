@@ -24,7 +24,7 @@
         box-shadow: 0 0 5px rgba(0, 0, 0, .35);
     }
     
-    .container {
+    .container.img-responsive {
         background-image: url({{ $.Site.BaseURL }}hero_faces_bw2.jpg);
         width: 100%;
         height: 600px;
@@ -47,12 +47,69 @@
     #dateval {
         font-weight: bold;
     }
+    
+    .text {
+        color: white;
+        margin-top: 15%;
+        background-color: #728198;
+    }
+    
+    .pageHeader .pageHeader-logo a {
+        display: block;
+        width: 89px;
+        height: 60px;
+        text-indent: 100%;
+        white-space: nowrap;
+        overflow: hidden;
+        background: url({{ $.Site.BaseURL }}logo_lendup_whitegreen.svg) left center no-repeat;
+        background-size: 100%;
+        margin-left: 15%;
+    }
+    
+    .pageHeader.home-style {
+        background: 0 0;
+        position: absolute;
+        top: 0;
+        width: 100%;
+        box-sizing: border-box;
+    }
+    
+    .pageHeader-logo {
+        background-color: #728198;
+    }
+    
+    .page-footer {
+        padding: 20px 0 35px;
+        font-size: 14px;
+        color: #D4D9E2;
+        background: #2E4C6C;
+    }
+    
+    .footer-nav {
+        margin: 0 0 0 20px;
+    }
+    
+    footer a {
+        color: white;
+    }
+    
+    .footer-nav li {
+        display: inline-block;
+        margin: 0 8px;
+    }
     </style>
 </head>
 
 <body>
+    <header class="pageHeader home-style">
+        <h4 class="col-md-2 pageHeader-logo">
+            <a href="/">LendUp</a>
+            </h4>
+    </header>
     <div class="row container img-responsive">
-        {{ .Content }}
+        <div class="col-md-4 col-md-offset-2 text">
+            {{ .Content }}
+        </div>
         <div class="col-md-3 col-md-offset-1 calc">
             <p>
                 <label for="amount">Amount:</label>
@@ -73,6 +130,53 @@
             <div class="col-md-4 center fsize12" id="rep"></div>
         </div>
     </div>
+    <footer class="page-footer product-LDC_LOAN">
+        <div class="container">
+            <div>
+                <div class="row">
+                    <div class="span12">
+                        <div class="page-footer-product">
+                            <a href="/"><img class="lendup-logo pull-left" width="65" src="//d7wp36vu44dwt.cloudfront.net/public/assets/images/logo_white.svg"></a>
+                            <ul class="footer-nav product pull-left" type="none">
+                                <li><a class="selected" href="/short-term-loans">Loans</a></li>
+                                <li><a href="/card">Credit Cards</a></li>
+                                <li><a href="/education">Education</a></li>
+                            </ul>
+                            <div class="pull-right legal-block">
+                                <p class="smallish copyright">
+                                    © Flurish, Inc. dba LendUp </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr class="trans small">
+            </div>
+            <div class="row">
+                <div class="span12">
+                    <p class="pull-left">© LendUp Global Inc.</p>
+                    <ul class="footer-nav pull-left" type="none">
+                        <li><a href="/about">About</a></li>
+                        <li><a href="/blog">Blog</a></li>
+                        <li><a href="/careers">Careers</a></li>
+                        <li><a href="/newsroom">Newsroom</a></li>
+                        <li id="footer-contact">
+                            <a href="/contact">Contact</a>
+                        </li>
+                        <li id="footer-faq">
+                            <a href="/faq">FAQs</a>
+                        </li>
+                        <li id="footer-legal">
+                            <a href="/legal">Legal</a>
+                        </li>
+                        <li id="footer-privacy">
+                            <a href="/privacy">Privacy</a>
+                        </li>
+                        <li><a href="/site-map">Site Map</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
 </body>
 <script>
 $(document).ready(function() {
@@ -118,11 +222,11 @@ $(document).ready(function() {
         $('#amt').html("Amount<br><strong>$" + amt + "</strong><p style='font-size: 10px;'>for " + b + " days</p>");
 
         amt = parseInt(amt);
-        var interest = Math.round(amt*(17/100));
+        var interest = Math.round(amt * (17 / 100));
         var apr = (17 * 365 / b).toFixed(2);
         $('#int').html("Interest<br><strong>$ " + interest + "</strong><p style='font-size: 10px;'>APR:" + apr + "%</p>");
 
-        var repay = interest+amt;
+        var repay = interest + amt;
         date = moment(date, 'D, M d').format('MMM D, YYYY');
         $('#rep').html("Repayment<br><strong>$" + repay + "</strong><p style='font-size: 10px;'>on " + date + "</p>");
     }
